@@ -3,7 +3,7 @@
 [OpenCPS Payment Integration](https://github.com/VietOpenCPS/payment) is a open source multi-gateway payment processing platform for OpenCPS.
 
 ## Components
-* Core API: Defines common APIs for all payment connector
+* Core API: Defines common APIs for all payment connectors
 * Payment connectors: Libraries that implements a specific payment gateway
 * OpenCPS Payment Bridge: Portlet/Servlet as a bridge between OpenCPS and payment gateways
 
