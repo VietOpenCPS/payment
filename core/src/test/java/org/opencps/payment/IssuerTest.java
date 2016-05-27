@@ -21,18 +21,19 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Unit test for simple PaymentMethod.
+ * Unit test for simple Issuer.
  * 
  * @author Nguyen Van Nguyen <nguyennv@iwayvietnam.com>
+ *
  */
-public class PaymentMethodTest extends TestCase {
+public class IssuerTest extends TestCase {
 
     /**
      * Create the test case
      * 
      * @param testName name of the test case
      */
-    public PaymentMethodTest(String testName) {
+    public IssuerTest(String testName) {
         super(testName);
     }
 
@@ -41,13 +42,20 @@ public class PaymentMethodTest extends TestCase {
      */
     public static Test suite()
     {
-        return new TestSuite(PaymentMethodTest.class);
+        return new TestSuite(Issuer.class);
+    }
+    
+    public void testIssuer() {
+    	Issuer issuer = new Issuer("OpenCPS Id","OpenCPS Issuer");
+        assertEquals("OpenCPS Id", issuer.getId());
+        assertEquals("OpenCPS Issuer", issuer.getName());
+    }
+    
+    public void testIssuerWithPayment() {
+    	Issuer issuer = new Issuer("OpenCPS Id","OpenCPS Issuer", "OpenCPS Payment Method");
+        assertEquals("OpenCPS Id", issuer.getId());
+        assertEquals("OpenCPS Issuer", issuer.getName());
+        assertEquals("OpenCPS Payment Method", issuer.getPaymentMethod());
     }
 
-    public void testPaymentMethod(){
-        PaymentMethod paymentMethod = new PaymentMethod("Payment Method Id", "Payment Method Name");
-
-        assertEquals("Payment Method Id", paymentMethod.getId());
-        assertEquals("Payment Method Name", paymentMethod.getName());
-    }
 }
