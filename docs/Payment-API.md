@@ -16,9 +16,9 @@ The main methods implemented by connectors are:
 * updateCard: Update a stored card
 * deleteCard: Delete a stored card
 
-All connector methods take an `Map<String, Object>` of parametters as an argument. Each connector differs in which parameters are required, and the connector will throw InvalidRequestException if you omit any required parameters.
+All connector methods take an `Map<String, Object>` of parametters as an argument and return Payment Request object. Each connector differs in which parameters are required, and the connector will throw InvalidRequestException if you omit any required parameters.
 
-All gateways will accept a subset of these options:
+All connectors will accept a subset of these options:
 * card: The credit card object
 * token: The merchant token of connector
 * amount: Amount on the customers card
