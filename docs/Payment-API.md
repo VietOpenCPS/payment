@@ -29,10 +29,40 @@ All connectors will accept a subset of these options:
 * returnUrl: The return url of on-site website
 * cancelUrl: The cancel url of on-site website
 
+Example:
+```java
+    PaymentConnector connector = ConnectorFactory.getConnector(MyConnector.class);
+    // Initialise the connector by a Map<String, Object> parametters
+    connector.initialize(params);
+
+    // Create a credit card object
+    CreditCard card = new CreditCard();
+
+    // Do an authorisation transaction on the gateway
+    if (connector.supportsAuthorize()) {
+        connector.authorize(params);
+    }
+    else {
+        throw new RuntimeException("Gateway does not support authorize()");
+    }
+```
+
 ## Payment Request
 This is an interface class defines the standard functions that any OpenCPS Payment request interface needs to be able to provide.
 Request objects are usually created using the `createRequest()` method of the connector and then actioned using methods within the request.
 To make the request to the payment gateway. Request objects using the Google Http Client for requesting or Java Servlet for redirecting.
+
+Example -- validating and sending a request:
+```java
+    PaymentConnector connector = ConnectorFactory.getConnector(MyConnector.class);
+    PaymentRequest request = connector.myRequest(params);
+    try {
+        request.validate();
+        PaymentResponse response = request.send();
+    } catch (InvalidRequestException e) {
+        // something went wrong
+    }
+```
 
 ## Payment Response
 This is an interface class defines the standard functions that any OpenCPS Payment response interface needs to be able to provide.
