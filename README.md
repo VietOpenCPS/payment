@@ -4,7 +4,7 @@
 
 ## Components
 * Core API: Defines common APIs for all payment connector
-* Payment connectors: Library that implements a specific payment gateway
+* Payment connectors: Libraries that implements a specific payment gateway
 * OpenCPS Payment Bridge: Portlet/Servlet as a bridge between OpenCPS and payment gateways
 
 ## License
