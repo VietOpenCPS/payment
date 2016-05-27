@@ -22,9 +22,9 @@ import java.io.IOException;
  * @author Nguyen Van Nguyen <nguyennv@iwayvietnam.com>
  */
 public class PaymentException extends IOException {
-	private static final long serialVersionUID = 6039606916479805421L;
+    private static final long serialVersionUID = 6039606916479805421L;
 
-	public PaymentException(String string) {
+    public PaymentException(String string) {
         super(string);
-	}
+    }
 }
