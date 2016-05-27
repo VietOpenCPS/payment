@@ -15,7 +15,7 @@ This is an interface class defines the standard functions that any payment conne
    + updateCard: Update a stored card
    + deleteCard: Delete a stored card
 
-All connector methods take an Map<String, Object> of parametters as an argument. Each connector differs in which parameters are required, and the gateway will throw InvalidRequestException if you omit any required parameters.
+All connector methods take an `Map<String, Object>` of parametters as an argument. Each connector differs in which parameters are required, and the gateway will throw InvalidRequestException if you omit any required parameters.
 
 All gateways will accept a subset of these options:
 * card: The credit card object
