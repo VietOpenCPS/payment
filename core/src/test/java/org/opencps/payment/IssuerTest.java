@@ -42,7 +42,7 @@ public class IssuerTest extends TestCase {
      */
     public static Test suite()
     {
-        return new TestSuite(Issuer.class);
+        return new TestSuite(IssuerTest.class);
     }
     
     public void testIssuer() {

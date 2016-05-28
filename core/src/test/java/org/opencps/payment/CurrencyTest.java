@@ -38,7 +38,7 @@ public class CurrencyTest extends TestCase {
      */
     public static Test suite()
     {
-        return new TestSuite(Currency.class);
+        return new TestSuite(CurrencyTest.class);
     }
 
     public void testFind() {
