@@ -81,7 +81,7 @@ public class Currency {
         code = code.toUpperCase();
         List<Currency> alls = alls();
         for (Currency item : alls) {
-            if (item.getCode() == code) {
+            if (item.getCode().equals(code)) {
                 return item;
             }
         }

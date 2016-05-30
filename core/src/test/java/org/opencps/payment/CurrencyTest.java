@@ -42,19 +42,17 @@ public class CurrencyTest extends TestCase {
     }
 
     public void testFind() {
-        Currency currency = Currency.find("VND");
-        assertEquals("VND", currency.getCode());
-        assertEquals("704", currency.getNumeric());
-        Integer decimal = 0;
-        assertEquals(decimal, currency.getDecimals());
+        Currency currency = Currency.find("USD");
+        assertEquals("USD", currency.getCode());
+        assertEquals("840", currency.getNumeric());
+        assertEquals(new Integer(2), currency.getDecimals());
     }
 
     public void testFindLowercase() {
         Currency currency = Currency.find("vnd");
         assertEquals("VND", currency.getCode());
         assertEquals("704", currency.getNumeric());
-        Integer decimal = 0;
-        assertEquals(decimal, currency.getDecimals());
+        assertEquals(new Integer(0), currency.getDecimals());
     }
 
     public void testFindReturnsNull() {
