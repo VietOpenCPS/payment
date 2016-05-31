@@ -451,9 +451,12 @@ public class CreditCard {
      */
     public String getTrack1() {
         String tracks = getTracks();
-        Pattern pattern = Pattern.compile("^\\%B\\d{1,19}\\^.{2,26}\\^\\d{4}\\d*\\?$");
+        Pattern pattern = Pattern.compile("(%?([A-Z])([0-9]{1,19})\\^([^\\^]{2,26})\\^([0-9]{4}|\\^)([0-9]{3}|\\^)?([^\\?]+)?\\??)[\t\n\r ]{0,2}.*");
         Matcher matcher = pattern.matcher(tracks);
-        return matcher.group();
+        if (matcher.matches()) {
+            return matcher.group(1);
+        }
+        return null;
     }
 
     /**
@@ -461,9 +464,12 @@ public class CreditCard {
      */
     public String getTrack2() {
         String tracks = getTracks();
-        Pattern pattern = Pattern.compile("^;\\d{1,19}=\\d{4}\\d*\\?$");
+        Pattern pattern = Pattern.compile(".*[\\t\\n\\r ]?(;([0-9]{1,19})=([0-9]{4})([0-9]{3})(.*)\\?).*");
         Matcher matcher = pattern.matcher(tracks);
-        return matcher.group();
+        if (matcher.matches()) {
+            return matcher.group(1);
+        }
+        return null;
     }
 
     /**

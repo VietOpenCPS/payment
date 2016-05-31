@@ -144,22 +144,17 @@ public class CreditCardTest extends TestCase {
     }
 
     public void testCustomSupportedBrand() {
-        CreditCard.addSupportedBrand("opcpsexpress", "/^9\\d{12}(\\d{3})?$/");
+        CreditCard.addSupportedBrand("opencps_express", "^9\\d{12}(\\d{3})?$");
         IterableMap<String, String> brands = CreditCard.getSupportedBrands();
-        String expression = brands.get("opcpsexpress");
-        assertNotNull(expression);
+        assertEquals("^9\\d{12}(\\d{3})?$", brands.get("opencps_express"));
     }
 
     public void testCustomBrandWorks() {
         try {
-            CreditCard.addSupportedBrand("opencps", "/^9\\d{12}(\\d{3})?$/");
-            IterableMap<String, String> brands = CreditCard.getSupportedBrands();
-            String expression = brands.get("opencps");
-            assertNotNull(expression);
-            assertEquals("opencps", card.getBrand());
-            
+            CreditCard.addSupportedBrand("opencps_express", "^9\\d{12}(\\d{3})?$");
             card.setNumber("9111111111111110");
             card.validate();
+            assertEquals("opencps_express", card.getBrand());
         }
         catch (InvalidCreditCardException ex) {
             fail(ex.getMessage());
