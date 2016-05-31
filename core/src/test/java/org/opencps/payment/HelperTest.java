@@ -64,6 +64,7 @@ public class HelperTest extends TestCase {
     public void testDecimalCount() {
         assertEquals(new Integer(1), Helper.decimalCount("1.2"));
         assertEquals(new Integer(3), Helper.decimalCount("1.234"));
+        assertEquals(new Integer(0), Helper.decimalCount("123"));
         assertEquals(new Integer(0), Helper.decimalCount("abc"));
     }
     

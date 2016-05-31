@@ -75,7 +75,9 @@ public class Helper {
     public static Integer decimalCount(String number) {
         if (Helper.isNumeric(number)) {
             int integerPlace = number.indexOf('.');
-            return number.length() - integerPlace - 1;
+            if (integerPlace > 0) {
+                return number.length() - integerPlace - 1;
+            }
         }
         return 0;
     }
