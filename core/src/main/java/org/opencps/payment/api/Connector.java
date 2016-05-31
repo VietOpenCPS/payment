@@ -55,4 +55,70 @@ public interface Connector {
      * @return IterableMap
      */
     public IterableMap<String, String> getParameters();
+
+    /**
+     * Supports authorize
+     * @return Boolean
+     */
+    public Boolean supportsAuthorize();
+
+    /**
+     * Supports complete authorize
+     * @return Boolean
+     */
+    public Boolean supportsCompleteAuthorize();
+
+    /**
+     * Supports capture
+     * @return Boolean
+     */
+    public Boolean supportsCapture();
+
+    /**
+     * Supports purchase
+     * @return Boolean
+     */
+    public Boolean supportsPurchase();
+
+    /**
+     * Supports complete purchase
+     * @return Boolean
+     */
+    public Boolean supportsCompletePurchase();
+
+    /**
+     * Supports refund
+     * @return Boolean
+     */
+    public Boolean supportsRefund();
+
+    /**
+     * Supports void
+     * @return Boolean
+     */
+    public Boolean supportsVoid();
+
+    /**
+     * Supports accept notification
+     * @return Boolean
+     */
+    public Boolean supportsAcceptNotification();
+
+    /**
+     * Supports create card
+     * @return Boolean
+     */
+    public Boolean supportsCreateCard();
+
+    /**
+     * Supports delete card
+     * @return Boolean
+     */
+    public Boolean supportsDeleteCard();
+
+    /**
+     * Supports update card
+     * @return Boolean
+     */
+    public Boolean supportsUpdateCard();
 }
