@@ -340,7 +340,7 @@ public class RequestBaseTest extends TestCase {
     class MockAbstractRequest extends RequestBase {
 
         public MockAbstractRequest() {
-            super(mock(ConnectorBase.class, CALLS_REAL_METHODS));
+            super(mock(ConnectorBase.class));
         }
 
         public MockAbstractRequest(ConnectorBase connector) {
@@ -354,7 +354,7 @@ public class RequestBaseTest extends TestCase {
 
         @Override
         public PaymentResponse send(String data) {
-            response = mock(PaymentResponse.class, CALLS_REAL_METHODS);
+            response = mock(PaymentResponse.class);
             return response;
         }
 
