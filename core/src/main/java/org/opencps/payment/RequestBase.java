@@ -118,7 +118,14 @@ public abstract class RequestBase implements PaymentRequest {
         parameters.put(key, value);
         return this;
     }
-    
+
+    /**
+     * Get connector base
+     */
+    public ConnectorBase getConnector() {
+        return connector;
+    }
+
     /**
      * Get test mode of the request
      */

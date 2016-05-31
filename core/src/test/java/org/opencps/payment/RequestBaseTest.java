@@ -337,6 +337,11 @@ public class RequestBaseTest extends TestCase {
         assertTrue(request.getResponse() instanceof PaymentResponse);
     }
     
+    public void testGetConnector() {
+        RequestBase request = new MockAbstractRequest();
+        assertTrue(request.getConnector() instanceof ConnectorBase);
+    }
+
     class MockAbstractRequest extends RequestBase {
 
         public MockAbstractRequest() {
