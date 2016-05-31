@@ -17,6 +17,7 @@
 package org.opencps.payment;
 
 import org.apache.commons.collections4.IterableMap;
+import org.apache.commons.collections4.map.HashedMap;
 import org.opencps.payment.api.PaymentItem;
 
 /**
@@ -28,6 +29,13 @@ public class Item implements PaymentItem {
 
     protected IterableMap<String, String> parameters;
 
+    /**
+     * Create a new item
+     */
+    public Item() {
+    	parameters = new HashedMap<String, String>();
+    }
+    
     /**
      * Create a new item with the specified parameters
      */

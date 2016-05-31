@@ -31,7 +31,7 @@ public interface PaymentRequest extends PaymentMessage {
      * 
      * @param Map The parameters to send
      */
-    public PaymentRequest initialize(IterableMap<String, String> parameters);
+    public PaymentRequest initialize(IterableMap<String, String> parameters) throws RuntimeException;
 
     /**
      * Get all request parameters
