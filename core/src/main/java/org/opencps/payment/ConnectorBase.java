@@ -19,6 +19,7 @@ package org.opencps.payment;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.apache.ApacheHttpTransport;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -93,7 +94,7 @@ public abstract class ConnectorBase implements Connector {
      */
     @Override
     public IterableMap<String, String> getParameters() {
-    	return parameters;
+        return parameters;
     }
     
     /**
@@ -159,7 +160,7 @@ public abstract class ConnectorBase implements Connector {
      * @return HttpServletRequest
      */
     public HttpServletRequest getServletRequest() {
-    	return servletRequest;
+        return servletRequest;
     }
     
     /**
@@ -167,7 +168,7 @@ public abstract class ConnectorBase implements Connector {
      * @return HttpServletResponse
      */
     public HttpServletResponse getServletResponse() {
-    	return servletResponse;
+        return servletResponse;
     }
     
     /**
@@ -175,14 +176,25 @@ public abstract class ConnectorBase implements Connector {
      * @return HttpTransport
      */
     public HttpTransport getHttpTransport() {
-    	return transport;
+        return transport;
     }
     
     /**
      * Create and initialize a request object
      * 
      * @param parameters
+     * @return 
      * @return RequestBase
+     * @throws SecurityException 
+     * @throws NoSuchMethodException 
+     * @throws InvocationTargetException 
+     * @throws IllegalArgumentException 
+     * @throws IllegalAccessException 
+     * @throws InstantiationException 
      */
-    protected abstract RequestBase createRequest(IterableMap<String, String> parameters);
+    protected <T extends RequestBase> T createRequest(Class<T> type, IterableMap<String, String> parameters) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+        T request = type.getDeclaredConstructor(type).newInstance(this);
+        request.initialize(parameters);
+        return request;
+    }
 }
