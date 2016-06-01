@@ -37,6 +37,9 @@ public abstract class ResponseBase implements PaymentResponse {
      */
     protected RequestBase request;
     
+    /**
+     * The data contained in the response.
+     */
     protected IterableMap<String, String> data;
     
     /**
