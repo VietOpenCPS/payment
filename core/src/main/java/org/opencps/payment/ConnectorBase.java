@@ -82,6 +82,9 @@ public abstract class ConnectorBase implements Connector {
      */
     @Override
     public Connector initialize(IterableMap<String, String> parameters) {
+        if (this.parameters == null) {
+            this.parameters = new HashedMap<String, String>();
+        }
         for (Map.Entry<String, String> entry: parameters.entrySet()) {
             this.parameters.put(entry.getKey(), entry.getValue());
         }
