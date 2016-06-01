@@ -50,26 +50,52 @@ public abstract class ResponseBase implements PaymentResponse {
         this.data = data;
     }
 
+    /**
+     * (non-Javadoc)
+     * @see org.opencps.payment.api.PaymentResponse#getRequest()
+     */
+    @Override
     public PaymentRequest getRequest() {
         return request;
     }
     
+    /**
+     * Is the response successful?
+     */
     public Boolean isPending() {
         return false;
     }
     
+    /**
+     * (non-Javadoc)
+     * @see org.opencps.payment.api.PaymentResponse#isRedirect()
+     */
+    @Override
     public Boolean isRedirect() {
         return false;
     }
     
+    /**
+     * Is the response a transparent redirect?
+     */
     public Boolean isTransparentRedirect() {
         return false;
     }
     
+    /**
+     * (non-Javadoc)
+     * @see org.opencps.payment.api.PaymentResponse#isCancelled()
+     */
+    @Override
     public Boolean isCancelled() {
         return false;
     }
     
+    /**
+     * (non-Javadoc)
+     * @see org.opencps.payment.api.PaymentMessage#getData()
+     */
+    @Override
     public IterableMap<String, String> getData() {
         return data;
     }
