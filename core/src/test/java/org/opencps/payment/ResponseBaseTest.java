@@ -18,9 +18,13 @@ package org.opencps.payment;
 
 import static org.mockito.Mockito.CALLS_REAL_METHODS;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import java.io.IOException;
 
 import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.map.HashedMap;
+import org.opencps.payment.api.PaymentRedirectResponse;
 import org.opencps.payment.api.PaymentRequest;
 
 import junit.framework.Test;
@@ -69,6 +73,31 @@ public class ResponseBaseTest extends TestCase {
     	assertNull(response.getCode());
     }
     
+    public void testGetRedirectResponseNotSupported() {
+    	PaymentRedirectResponse response = mock(RedirectResponseBase.class, CALLS_REAL_METHODS);
+    	when(response.isRedirect()).thenReturn(false);
+    	try {
+			response.redirect();
+			fail("Missing exception");
+		} catch (IOException e) {
+			assertEquals("This response does not support redirection.", e.getMessage());
+		}
+    }
+    
+    public void testGetRedirectResponseGet() {
+    	RedirectResponseBase response = mock(RedirectResponseBase.class, CALLS_REAL_METHODS);
+    	when(response.isRedirect()).thenReturn(true);
+    }
+    
+    public void testGetRedirectForm() {
+    	RedirectResponseBase response = mock(MockRedirectResponse.class, CALLS_REAL_METHODS);
+    	
+    	String form = response.getRedirectForm();
+    	assertTrue(form.contains("<form action=\"https://example.com/redirect?a=1&b=2\" method=\"post\">"));
+    	assertTrue(form.contains("<input type=\"hidden\" name=\"key\" value=\"value\" />"));
+    	assertTrue(form.contains("<input type=\"hidden\" name=\"foo\" value=\"bar\" />"));
+    }
+    
     class MockAbstractResponse extends ResponseBase {
 
     	public MockAbstractResponse() {
@@ -81,28 +110,69 @@ public class ResponseBaseTest extends TestCase {
 
 		@Override
 		public Boolean isSuccessful() {
-			// TODO Auto-generated method stub
 			return false;
 		}
 
 		@Override
 		public String getMessage() {
-			// TODO Auto-generated method stub
 			return null;
 		}
 
 		@Override
 		public String getCode() {
-			// TODO Auto-generated method stub
 			return null;
 		}
 
 		@Override
 		public String getTransactionReference() {
-			// TODO Auto-generated method stub
 			return null;
 		}
     	
     }
 
+    class MockRedirectResponse extends RedirectResponseBase implements PaymentRedirectResponse {
+
+		public MockRedirectResponse(RequestBase request, IterableMap<String, String> data) {
+			super(request, data);
+		}
+
+		@Override
+		public Boolean isSuccessful() {
+			return false;
+		}
+
+		@Override
+		public String getMessage() {
+			return null;
+		}
+
+		@Override
+		public String getCode() {
+			return null;
+		}
+
+		@Override
+		public String getTransactionReference() {
+			return null;
+		}
+
+		@Override
+		public String getRedirectUrl() {
+			return "https://example.com/redirect?a=1&b=2";
+		}
+
+		@Override
+		public String getRedirectMethod() {
+			return "POST";
+		}
+
+		@Override
+		public IterableMap<String, String> getRedirectData() {
+			IterableMap<String, String> data = new HashedMap<String, String>();
+			data.put("foo", "bar");
+			data.put("key", "value");
+			return data;
+		}
+    	
+    }
 }
