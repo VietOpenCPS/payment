@@ -50,12 +50,12 @@ public abstract class RedirectResponseBase extends ResponseBase implements Payme
      */
     @Override
     public void redirect() throws IOException {
-    	if (!isRedirect()) {
-    		throw new IOException("This response does not support redirection.");
-    	}
-    	HttpServletResponse response = request.getConnector().getServletResponse();
+        if (!isRedirect()) {
+            throw new IOException("This response does not support redirection.");
+        }
+        HttpServletResponse response = request.getConnector().getServletResponse();
         if (getRedirectMethod() == "GET") {
-        	response.sendRedirect(getRedirectUrl());
+            response.sendRedirect(getRedirectUrl());
         }
         else if(getRedirectMethod() == "POST") {
             response.setContentType("text/html");
@@ -86,14 +86,14 @@ public abstract class RedirectResponseBase extends ResponseBase implements Payme
 
         StringBuilder redirectForm = new StringBuilder();
         redirectForm.append("<!DOCTYPE html><html><head>")
-        	.append("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />")
-        	.append("<title>Redirecting...</title>")
-        	.append("<body onload=\"document.forms[0].submit();\">")
-        	.append("<form action=\"" + getRedirectUrl() + "\" method=\"post\">")
-        	.append("<p>Redirecting to payment page...</p>")
-        	.append("<p><input type=\"submit\" value=\"Continue\" /></p>")
-        	.append(hiddenFields)
-        	.append("</form></body></html>");
+            .append("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />")
+            .append("<title>Redirecting...</title>")
+            .append("<body onload=\"document.forms[0].submit();\">")
+            .append("<form action=\"" + getRedirectUrl() + "\" method=\"post\">")
+            .append("<p>Redirecting to payment page...</p>")
+            .append("<p><input type=\"submit\" value=\"Continue\" /></p>")
+            .append(hiddenFields)
+            .append("</form></body></html>");
 
         return redirectForm.toString();
     }
