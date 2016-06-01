@@ -54,10 +54,10 @@ public abstract class RedirectResponseBase extends ResponseBase implements Payme
             throw new IOException("This response does not support redirection.");
         }
         HttpServletResponse response = request.getConnector().getServletResponse();
-        if (getRedirectMethod() == "GET") {
+        if (getRedirectMethod().toUpperCase() == "GET") {
             response.sendRedirect(getRedirectUrl());
         }
-        else if(getRedirectMethod() == "POST") {
+        else if(getRedirectMethod().toUpperCase() == "POST") {
             response.setContentType("text/html");
             response.setCharacterEncoding("UTF-8");
             PrintWriter out = response.getWriter();
