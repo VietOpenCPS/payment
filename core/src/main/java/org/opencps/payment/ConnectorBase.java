@@ -183,7 +183,6 @@ public abstract class ConnectorBase implements Connector {
      * Create and initialize a request object
      * 
      * @param parameters
-     * @return 
      * @return RequestBase
      * @throws SecurityException 
      * @throws NoSuchMethodException 

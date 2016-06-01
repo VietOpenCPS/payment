@@ -311,7 +311,7 @@ public class RequestBaseTest extends TestCase {
     }
     
     public void testSend() {
-    	IterableMap<String, String> data = new HashedMap<String, String>();
+        IterableMap<String, String> data = new HashedMap<String, String>();
         PaymentResponse response = mock(PaymentResponse.class);
         PaymentRequest request = mock(RequestBase.class, CALLS_REAL_METHODS);
         when(request.getData()).thenReturn(data);
@@ -368,11 +368,11 @@ public class RequestBaseTest extends TestCase {
             return null;
         }
 
-		@Override
-		public PaymentResponse send(IterableMap<String, String> data) {
+        @Override
+        public PaymentResponse send(IterableMap<String, String> data) {
             response = mock(PaymentResponse.class);
             return response;
-		}
+        }
         
     }
 }

@@ -56,123 +56,123 @@ public class ResponseBaseTest extends TestCase {
     }
     
     public void testConstruct() {
-    	ResponseBase response = new MockAbstractResponse();
+        ResponseBase response = new MockAbstractResponse();
         assertTrue(response.getRequest() instanceof PaymentRequest);
         assertTrue(response.getData() instanceof IterableMap);
     }
     
     public void testDefaultMethods() {
-    	ResponseBase response = mock(ResponseBase.class, CALLS_REAL_METHODS);
-    	assertFalse(response.isPending());
-    	assertFalse(response.isRedirect());
-    	assertFalse(response.isTransparentRedirect());
-    	assertFalse(response.isCancelled());
-    	assertNull(response.getData());
-    	assertNull(response.getTransactionReference());
-    	assertNull(response.getMessage());
-    	assertNull(response.getCode());
+        ResponseBase response = mock(ResponseBase.class, CALLS_REAL_METHODS);
+        assertFalse(response.isPending());
+        assertFalse(response.isRedirect());
+        assertFalse(response.isTransparentRedirect());
+        assertFalse(response.isCancelled());
+        assertNull(response.getData());
+        assertNull(response.getTransactionReference());
+        assertNull(response.getMessage());
+        assertNull(response.getCode());
     }
     
     public void testGetRedirectResponseNotSupported() {
-    	PaymentRedirectResponse response = mock(RedirectResponseBase.class, CALLS_REAL_METHODS);
-    	when(response.isRedirect()).thenReturn(false);
-    	try {
-			response.redirect();
-			fail("Missing exception");
-		} catch (IOException e) {
-			assertEquals("This response does not support redirection.", e.getMessage());
-		}
+        PaymentRedirectResponse response = mock(RedirectResponseBase.class, CALLS_REAL_METHODS);
+        when(response.isRedirect()).thenReturn(false);
+        try {
+            response.redirect();
+            fail("Missing exception");
+        } catch (IOException e) {
+            assertEquals("This response does not support redirection.", e.getMessage());
+        }
     }
     
     public void testGetRedirectResponseGet() {
-    	RedirectResponseBase response = mock(RedirectResponseBase.class, CALLS_REAL_METHODS);
-    	when(response.isRedirect()).thenReturn(true);
+        RedirectResponseBase response = mock(RedirectResponseBase.class, CALLS_REAL_METHODS);
+        when(response.isRedirect()).thenReturn(true);
     }
     
     public void testGetRedirectForm() {
-    	RedirectResponseBase response = mock(MockRedirectResponse.class, CALLS_REAL_METHODS);
-    	
-    	String form = response.getRedirectForm();
-    	assertTrue(form.contains("<form action=\"https://example.com/redirect?a=1&b=2\" method=\"post\">"));
-    	assertTrue(form.contains("<input type=\"hidden\" name=\"key\" value=\"value\" />"));
-    	assertTrue(form.contains("<input type=\"hidden\" name=\"foo\" value=\"bar\" />"));
+        RedirectResponseBase response = mock(MockRedirectResponse.class, CALLS_REAL_METHODS);
+        
+        String form = response.getRedirectForm();
+        assertTrue(form.contains("<form action=\"https://example.com/redirect?a=1&b=2\" method=\"post\">"));
+        assertTrue(form.contains("<input type=\"hidden\" name=\"key\" value=\"value\" />"));
+        assertTrue(form.contains("<input type=\"hidden\" name=\"foo\" value=\"bar\" />"));
     }
     
     class MockAbstractResponse extends ResponseBase {
 
-    	public MockAbstractResponse() {
-    		super(mock(RequestBase.class), new HashedMap<String, String>());
-    	}
-    	
-		public MockAbstractResponse(RequestBase request, IterableMap<String, String> data) {
-			super(request, data);
-		}
+        public MockAbstractResponse() {
+            super(mock(RequestBase.class), new HashedMap<String, String>());
+        }
+        
+        public MockAbstractResponse(RequestBase request, IterableMap<String, String> data) {
+            super(request, data);
+        }
 
-		@Override
-		public Boolean isSuccessful() {
-			return false;
-		}
+        @Override
+        public Boolean isSuccessful() {
+            return false;
+        }
 
-		@Override
-		public String getMessage() {
-			return null;
-		}
+        @Override
+        public String getMessage() {
+            return null;
+        }
 
-		@Override
-		public String getCode() {
-			return null;
-		}
+        @Override
+        public String getCode() {
+            return null;
+        }
 
-		@Override
-		public String getTransactionReference() {
-			return null;
-		}
-    	
+        @Override
+        public String getTransactionReference() {
+            return null;
+        }
+        
     }
 
     class MockRedirectResponse extends RedirectResponseBase implements PaymentRedirectResponse {
 
-		public MockRedirectResponse(RequestBase request, IterableMap<String, String> data) {
-			super(request, data);
-		}
+        public MockRedirectResponse(RequestBase request, IterableMap<String, String> data) {
+            super(request, data);
+        }
 
-		@Override
-		public Boolean isSuccessful() {
-			return false;
-		}
+        @Override
+        public Boolean isSuccessful() {
+            return false;
+        }
 
-		@Override
-		public String getMessage() {
-			return null;
-		}
+        @Override
+        public String getMessage() {
+            return null;
+        }
 
-		@Override
-		public String getCode() {
-			return null;
-		}
+        @Override
+        public String getCode() {
+            return null;
+        }
 
-		@Override
-		public String getTransactionReference() {
-			return null;
-		}
+        @Override
+        public String getTransactionReference() {
+            return null;
+        }
 
-		@Override
-		public String getRedirectUrl() {
-			return "https://example.com/redirect?a=1&b=2";
-		}
+        @Override
+        public String getRedirectUrl() {
+            return "https://example.com/redirect?a=1&b=2";
+        }
 
-		@Override
-		public String getRedirectMethod() {
-			return "POST";
-		}
+        @Override
+        public String getRedirectMethod() {
+            return "POST";
+        }
 
-		@Override
-		public IterableMap<String, String> getRedirectData() {
-			IterableMap<String, String> data = new HashedMap<String, String>();
-			data.put("foo", "bar");
-			data.put("key", "value");
-			return data;
-		}
-    	
+        @Override
+        public IterableMap<String, String> getRedirectData() {
+            IterableMap<String, String> data = new HashedMap<String, String>();
+            data.put("foo", "bar");
+            data.put("key", "value");
+            return data;
+        }
+        
     }
 }
