@@ -59,5 +59,12 @@ public interface PaymentRequest extends PaymentMessage {
      * 
      * @return ResponseInterface
      */
+    public PaymentResponse send(IterableMap<String, String> data);
+
+    /**
+     * Send the request with specified data
+     * 
+     * @return ResponseInterface
+     */
     public PaymentResponse send(String data);
 }

@@ -42,7 +42,7 @@ public abstract class RequestBase implements PaymentRequest {
      * The request parameters
      */
     protected IterableMap<String, String> parameters;
-    
+
     /**
      * The HTTP transport object.
      */
@@ -57,16 +57,16 @@ public abstract class RequestBase implements PaymentRequest {
      * An associated PaymentResponse.
      */
     protected PaymentResponse response;
-    
+
     /**
      * The credit card parameter
      */
     protected CreditCard card;
-    
+
     protected static Boolean zeroAmountAllowed = true;
 
     protected static Boolean negativeAmountAllowed = false;
-    
+
     public RequestBase(ConnectorBase connector) {
         this.connector = connector;
         parameters = new HashedMap<String, String>();
@@ -91,7 +91,7 @@ public abstract class RequestBase implements PaymentRequest {
         }
         return this;
     }
-    
+
     /**
      * (non-Javadoc)
      * @see org.opencps.payment.api.PaymentRequest#getParameters()
@@ -100,14 +100,14 @@ public abstract class RequestBase implements PaymentRequest {
     public IterableMap<String, String> getParameters() {
         return parameters;
     }
-    
+
     /**
      * Get a single parameter.
      */
     protected String getParameter(String key) {
         return parameters.get(key);
     }
-    
+
     /**
      * Set a single parameter
      */
@@ -137,21 +137,21 @@ public abstract class RequestBase implements PaymentRequest {
             return false;
         }
     }
-    
+
     /**
      * Set test mode of the request
      */
     public RequestBase setTestMode(Boolean value) {
         return setParameter("testMode", value.toString());
     }
-    
+
     /**
      * Get the credit card.
      */
     public CreditCard getCard() {
         return card;
     }
-    
+
     /**
      * Set the credit card.
      */
@@ -168,7 +168,7 @@ public abstract class RequestBase implements PaymentRequest {
         this.card = new CreditCard(parameters);
         return this;
     }
-    
+
     /**
      * Get the card token.
      */
@@ -224,28 +224,28 @@ public abstract class RequestBase implements PaymentRequest {
         }
         return amount;
     }
-    
+
     /**
      * Sets the payment amount.
      */
     public RequestBase setAmount(String value) {
         return setParameter("amount", value);
     }
-    
+
     /**
      * Sets the payment amount.
      */
     public RequestBase setAmount(Float value) {
         return setParameter("amount", value.toString());
     }
-    
+
     /**
      * Get the payment amount as an integer.
      */
     public Integer getAmountInteger() throws InvalidRequestException {
         return Math.round(Helper.toFloat(getAmount()) * getCurrencyDecimalFactor());
     }
-    
+
     /**
      * Get the payment currency code.
      */
@@ -284,7 +284,7 @@ public abstract class RequestBase implements PaymentRequest {
         }
         return 2;
     }
-    
+
     private Integer getCurrencyDecimalFactor() {
         return (int) Math.pow(10, getCurrencyDecimalPlaces());
     }
@@ -295,7 +295,7 @@ public abstract class RequestBase implements PaymentRequest {
     public String getDescription() {
         return getParameter("description");
     }
-    
+
     /**
      * Set the request description.
      */
@@ -311,7 +311,7 @@ public abstract class RequestBase implements PaymentRequest {
     public String getTransactionId() {
         return getParameter("transactionId");
     }
-    
+
     /**
      * Sets the transaction ID.
      */
@@ -341,7 +341,7 @@ public abstract class RequestBase implements PaymentRequest {
     public List<PaymentItem> getItems () {
         return items;
     }
-    
+
     /**
      * Set request items
      */
@@ -356,7 +356,7 @@ public abstract class RequestBase implements PaymentRequest {
     public String getClientIp() {
         return getParameter("clientIp");
     }
-    
+
     /**
      * Set the client IP address.
      */
@@ -370,7 +370,7 @@ public abstract class RequestBase implements PaymentRequest {
     public String getReturnUrl() {
         return getParameter("returnUrl");
     }
-    
+
     /**
      * Set the request return URL.
      */
@@ -384,7 +384,7 @@ public abstract class RequestBase implements PaymentRequest {
     public String getCancelUrl() {
         return getParameter("cancelUrl");
     }
-    
+
     /**
      * Set the request cancel URL.
      */
@@ -398,7 +398,7 @@ public abstract class RequestBase implements PaymentRequest {
     public String getNotifyUrl() {
         return getParameter("notifyUrl");
     }
-    
+
     /**
      * Set the request notify URL.
      */
@@ -412,7 +412,7 @@ public abstract class RequestBase implements PaymentRequest {
     public String getIssuer() {
         return getParameter("issuer");
     }
-    
+
     /**
      * Set the payment issuer.
      */
@@ -426,22 +426,22 @@ public abstract class RequestBase implements PaymentRequest {
     public String getPaymentMethod() {
         return getParameter("paymentMethod");
     }
-    
+
     /**
      * Set the payment method.
      */
     public RequestBase setPaymentMethod(String value) {
         return setParameter("paymentMethod", value);
     }
-    
+
     /**
      * Send the request
      */
     public PaymentResponse send() {
-        String data = getData();
+    	IterableMap<String, String> data = getData();
         return send(data);
     }
-    
+
     /**
      * Get the associated response.
      */
