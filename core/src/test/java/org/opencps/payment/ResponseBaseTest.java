@@ -21,12 +21,10 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
-
-import org.apache.commons.collections4.IterableMap;
-import org.apache.commons.collections4.map.HashedMap;
+import java.util.HashMap;
+import java.util.Map;
 import org.opencps.payment.api.PaymentRedirectResponse;
 import org.opencps.payment.api.PaymentRequest;
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -58,7 +56,7 @@ public class ResponseBaseTest extends TestCase {
     public void testConstruct() {
         ResponseBase response = new MockAbstractResponse();
         assertTrue(response.getRequest() instanceof PaymentRequest);
-        assertTrue(response.getData() instanceof IterableMap);
+        assertTrue(response.getData() instanceof Map);
     }
     
     public void testDefaultMethods() {
@@ -101,10 +99,10 @@ public class ResponseBaseTest extends TestCase {
     class MockAbstractResponse extends ResponseBase {
 
         public MockAbstractResponse() {
-            super(mock(RequestBase.class), new HashedMap<String, String>());
+            super(mock(RequestBase.class), new HashMap<String, String>());
         }
         
-        public MockAbstractResponse(RequestBase request, IterableMap<String, String> data) {
+        public MockAbstractResponse(RequestBase request, Map<String, String> data) {
             super(request, data);
         }
 
@@ -132,7 +130,7 @@ public class ResponseBaseTest extends TestCase {
 
     class MockRedirectResponse extends RedirectResponseBase implements PaymentRedirectResponse {
 
-        public MockRedirectResponse(RequestBase request, IterableMap<String, String> data) {
+        public MockRedirectResponse(RequestBase request, Map<String, String> data) {
             super(request, data);
         }
 
@@ -167,8 +165,8 @@ public class ResponseBaseTest extends TestCase {
         }
 
         @Override
-        public IterableMap<String, String> getRedirectData() {
-            IterableMap<String, String> data = new HashedMap<String, String>();
+        public Map<String, String> getRedirectData() {
+        	Map<String, String> data = new HashMap<String, String>();
             data.put("foo", "bar");
             data.put("key", "value");
             return data;

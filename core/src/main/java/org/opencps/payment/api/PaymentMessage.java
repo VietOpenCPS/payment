@@ -16,7 +16,7 @@
 */
 package org.opencps.payment.api;
 
-import org.apache.commons.collections4.IterableMap;
+import java.util.Map;
 
 /**
  * This interface class defines the standard functions that any OpenCPS Payment message
@@ -29,5 +29,5 @@ public interface PaymentMessage {
     /**
      * Get the raw data for this message.
      */
-    public IterableMap<String, String> getData();
+    public Map<String, String> getData();
 }

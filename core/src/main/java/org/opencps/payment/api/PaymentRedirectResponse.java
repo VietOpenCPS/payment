@@ -17,8 +17,7 @@
 package org.opencps.payment.api;
 
 import java.io.IOException;
-
-import org.apache.commons.collections4.IterableMap;
+import java.util.Map;
 
 /**
  * This interface class defines the functionality of a response
@@ -43,7 +42,7 @@ public interface PaymentRedirectResponse extends PaymentResponse {
     /**
      * Gets the redirect form data array, if the redirect method is POST.
      */
-    public IterableMap<String, String> getRedirectData();
+    public Map<String, String> getRedirectData();
 
     /**
      * Perform the required redirect.

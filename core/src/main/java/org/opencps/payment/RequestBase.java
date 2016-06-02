@@ -17,11 +17,9 @@
 package org.opencps.payment;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.commons.collections4.IterableMap;
-import org.apache.commons.collections4.map.HashedMap;
 import org.opencps.payment.api.PaymentItem;
 import org.opencps.payment.api.PaymentRequest;
 import org.opencps.payment.api.PaymentResponse;
@@ -41,7 +39,7 @@ public abstract class RequestBase implements PaymentRequest {
     /**
      * The request parameters
      */
-    protected IterableMap<String, String> parameters;
+    protected Map<String, String> parameters;
 
     /**
      * The HTTP transport object.
@@ -69,7 +67,7 @@ public abstract class RequestBase implements PaymentRequest {
 
     public RequestBase(ConnectorBase connector) {
         this.connector = connector;
-        parameters = new HashedMap<String, String>();
+        parameters = new HashMap<String, String>();
         items = new ArrayList<PaymentItem>();
     }
 
@@ -79,12 +77,12 @@ public abstract class RequestBase implements PaymentRequest {
      * @see org.opencps.payment.api.PaymentRequest#initialize()
      */
     @Override
-    public PaymentRequest initialize(IterableMap<String, String> parameters) throws RuntimeException {
+    public PaymentRequest initialize(Map<String, String> parameters) throws RuntimeException {
         if (response != null) {
             throw new RuntimeException("Request cannot be modified after it has been sent!");
         }
         if (this.parameters == null) {
-            this.parameters = new HashedMap<String, String>();
+            this.parameters = new HashMap<String, String>();
         }
         for (Map.Entry<String, String> entry: parameters.entrySet()) {
             this.parameters.put(entry.getKey(), entry.getValue());
@@ -97,7 +95,7 @@ public abstract class RequestBase implements PaymentRequest {
      * @see org.opencps.payment.api.PaymentRequest#getParameters()
      */
     @Override
-    public IterableMap<String, String> getParameters() {
+    public Map<String, String> getParameters() {
         return parameters;
     }
 
@@ -164,7 +162,7 @@ public abstract class RequestBase implements PaymentRequest {
      * Set the credit card with parameters.
      * @param parameters
      */
-    public RequestBase setCard(IterableMap<String, String> parameters) {
+    public RequestBase setCard(Map<String, String> parameters) {
         this.card = new CreditCard(parameters);
         return this;
     }
@@ -438,7 +436,7 @@ public abstract class RequestBase implements PaymentRequest {
      * Send the request
      */
     public PaymentResponse send() {
-    	IterableMap<String, String> data = getData();
+    	Map<String, String> data = getData();
         return send(data);
     }
 

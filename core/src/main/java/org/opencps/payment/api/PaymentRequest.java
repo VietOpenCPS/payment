@@ -16,7 +16,7 @@
 */
 package org.opencps.payment.api;
 
-import org.apache.commons.collections4.IterableMap;
+import java.util.Map;
 
 /**
  * This interface class defines the standard functions that any OpenCPS Payment request
@@ -31,14 +31,14 @@ public interface PaymentRequest extends PaymentMessage {
      * 
      * @param Map The parameters to send
      */
-    public PaymentRequest initialize(IterableMap<String, String> parameters) throws RuntimeException;
+    public PaymentRequest initialize(Map<String, String> parameters) throws RuntimeException;
 
     /**
      * Get all request parameters
      * 
      * @return Map
      */
-    public IterableMap<String, String> getParameters();
+    public Map<String, String> getParameters();
 
     /**
      * Get the response to this request (if the request has been sent)
@@ -59,7 +59,7 @@ public interface PaymentRequest extends PaymentMessage {
      * 
      * @return ResponseInterface
      */
-    public PaymentResponse send(IterableMap<String, String> data);
+    public PaymentResponse send(Map<String, String> data);
 
     /**
      * Send the request with specified data

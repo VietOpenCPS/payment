@@ -19,12 +19,10 @@ package org.opencps.payment;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.apache.commons.collections4.IterableMap;
-import org.apache.commons.collections4.map.HashedMap;
 import org.opencps.payment.exception.InvalidCreditCardException;
 
 /**
@@ -51,7 +49,7 @@ public class CreditCard {
     /**
      * All known/supported card brands, and a regular expression to match them.
      */
-    protected static IterableMap<String, String> supportedCards = new HashedMap<String, String>();
+    protected static Map<String, String> supportedCards = new HashMap<String, String>();
     static {
         supportedCards.put(BRAND_VISA, "^4\\d{12}(\\d{3})?$");
         supportedCards.put(BRAND_MASTERCARD, "^(5[1-5]\\d{4}|677189)\\d{10}$|^(222[1-9]|2[3-6]\\d{2}|27[0-1]\\d|2720)\\d{12}$");
@@ -70,26 +68,26 @@ public class CreditCard {
     /**
      * Internal storage of all of the card parameters.
      */
-    protected IterableMap<String, String> parameters;
+    protected Map<String, String> parameters;
     
     /**
      * Create a new CreditCard
      */
     public CreditCard() {
-        parameters = new HashedMap<String, String>();
+        parameters = new HashMap<String, String>();
     }
     
     /**
      * Create a new CreditCard object using the specified parameters
      */
-    public CreditCard(IterableMap<String, String> parameters) {
+    public CreditCard(Map<String, String> parameters) {
         this.parameters = parameters;
     }
 
     /**
      * All known/supported card brands, and a regular expression to match them.
      */
-    public static IterableMap<String, String> getSupportedBrands() {
+    public static Map<String, String> getSupportedBrands() {
         return supportedCards;
     }
     
@@ -136,7 +134,7 @@ public class CreditCard {
     /**
      * Get all parameters.
      */
-    public IterableMap<String, String> getParameters() {
+    public Map<String, String> getParameters() {
         return parameters;
     }
     

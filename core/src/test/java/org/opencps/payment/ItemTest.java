@@ -16,9 +16,8 @@
 */
 package org.opencps.payment;
 
-import org.apache.commons.collections4.IterableMap;
-import org.apache.commons.collections4.map.HashedMap;
-
+import java.util.HashMap;
+import java.util.Map;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -39,7 +38,7 @@ public class ItemTest extends TestCase {
      */
     public ItemTest(String testName) {
         super(testName);
-        item = new Item(new HashedMap<String, String>());
+        item = new Item(new HashMap<String, String>());
     }
 
     /**
@@ -51,7 +50,7 @@ public class ItemTest extends TestCase {
     }
 
     public void testConstructWithParams() {
-        IterableMap<String, String> params = new HashedMap<String, String>();
+        Map<String, String> params = new HashMap<String, String>();
         params.put("name", "Item Name");
         Item item = new Item(params);
 

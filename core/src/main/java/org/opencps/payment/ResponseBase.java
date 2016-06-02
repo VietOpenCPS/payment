@@ -16,7 +16,7 @@
 */
 package org.opencps.payment;
 
-import org.apache.commons.collections4.IterableMap;
+import java.util.Map;
 import org.opencps.payment.api.PaymentRequest;
 import org.opencps.payment.api.PaymentResponse;
 
@@ -40,7 +40,7 @@ public abstract class ResponseBase implements PaymentResponse {
     /**
      * The data contained in the response.
      */
-    protected IterableMap<String, String> data;
+    protected Map<String, String> data;
     
     /**
      * Constructor
@@ -48,7 +48,7 @@ public abstract class ResponseBase implements PaymentResponse {
      * @param PaymentRequest
      * @param String
      */
-    public ResponseBase(RequestBase request, IterableMap<String, String> data) {
+    public ResponseBase(RequestBase request, Map<String, String> data) {
         this.request = request;
         this.data = data;
     }
@@ -99,7 +99,7 @@ public abstract class ResponseBase implements PaymentResponse {
      * @see org.opencps.payment.api.PaymentMessage#getData()
      */
     @Override
-    public IterableMap<String, String> getData() {
+    public Map<String, String> getData() {
         return data;
     }
 }

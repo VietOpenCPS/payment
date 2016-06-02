@@ -17,11 +17,9 @@
 package org.opencps.payment;
 
 import java.util.Calendar;
-
-import org.apache.commons.collections4.IterableMap;
-import org.apache.commons.collections4.map.HashedMap;
+import java.util.HashMap;
+import java.util.Map;
 import org.opencps.payment.exception.InvalidCreditCardException;
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -64,7 +62,7 @@ public class CreditCardTest extends TestCase {
     }
 
     public void testConstructWithParams() {
-        IterableMap<String, String> params = new HashedMap<String, String>();
+        Map<String, String> params = new HashMap<String, String>();
         params.put("billingFirstName", "Test");
         params.put("billingLastName", "Card");
         CreditCard card = new CreditCard(params);
@@ -138,14 +136,14 @@ public class CreditCardTest extends TestCase {
     }
 
     public void testGetSupportedBrands() {
-        IterableMap<String, String> brands = CreditCard.getSupportedBrands();
+        Map<String, String> brands = CreditCard.getSupportedBrands();
         String expression = brands.get(CreditCard.BRAND_VISA);
         assertNotNull(expression);
     }
 
     public void testCustomSupportedBrand() {
         CreditCard.addSupportedBrand("opencps_express", "^9\\d{12}(\\d{3})?$");
-        IterableMap<String, String> brands = CreditCard.getSupportedBrands();
+        Map<String, String> brands = CreditCard.getSupportedBrands();
         assertEquals("^9\\d{12}(\\d{3})?$", brands.get("opencps_express"));
     }
 

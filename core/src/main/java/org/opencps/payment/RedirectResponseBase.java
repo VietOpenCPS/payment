@@ -19,11 +19,7 @@ package org.opencps.payment;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Map;
-import java.util.ResourceBundle;
-
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.collections4.IterableMap;
 import org.opencps.payment.api.PaymentRedirectResponse;
 
 /**
@@ -40,7 +36,7 @@ public abstract class RedirectResponseBase extends ResponseBase implements Payme
      * @param PaymentRequest
      * @param String
      */
-    public RedirectResponseBase(RequestBase request, IterableMap<String, String> data) {
+    public RedirectResponseBase(RequestBase request, Map<String, String> data) {
         super(request, data);
     }
     
@@ -73,7 +69,7 @@ public abstract class RedirectResponseBase extends ResponseBase implements Payme
      */
     public String getRedirectForm() {
         StringBuilder hiddenFields = new StringBuilder();
-        IterableMap<String, String> data = getRedirectData();
+        Map<String, String> data = getRedirectData();
 
         for (Map.Entry<String, String> entry: data.entrySet()) {
             hiddenFields.append("<input type=\"hidden\" name=\"")

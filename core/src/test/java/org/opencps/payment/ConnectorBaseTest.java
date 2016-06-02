@@ -18,18 +18,13 @@ package org.opencps.payment;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
-
-import java.lang.reflect.InvocationTargetException;
-
+import java.util.HashMap;
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.collections4.IterableMap;
-import org.apache.commons.collections4.map.HashedMap;
 import org.junit.Before;
 import org.junit.Test;
 import org.opencps.payment.api.PaymentResponse;
-
 import com.google.api.client.http.HttpTransport;
 
 /**
@@ -59,7 +54,7 @@ public class ConnectorBaseTest {
     
     @Test
     public void testInitializeParameters() {
-        IterableMap<String, String> params = new HashedMap<String, String>();
+        Map<String, String> params = new HashMap<String, String>();
         params.put("currency", "VND");
         params.put("unknown", "ABC");
         connector.initialize(params);
@@ -135,9 +130,9 @@ public class ConnectorBaseTest {
         assertFalse(connector.supportsAcceptNotification());
     }
 
-    public void testCreateRequest() throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+    public void testCreateRequest() {
     	MockAbstractConnector connector = new MockAbstractConnector();
-        IterableMap<String, String> params = new HashedMap<String, String>();
+    	Map<String, String> params = new HashMap<String, String>();
         params.put("currency", "VND");
         MockAbstractRequest request = connector.callCreateRequest(MockAbstractRequest.class, params);
         assertEquals("VND", request.getCurrency());
@@ -218,7 +213,7 @@ public class ConnectorBaseTest {
             return false;
         }
         
-        public <T extends RequestBase> T  callCreateRequest(Class<T> type, IterableMap<String, String> parameters) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+        public <T extends RequestBase> T  callCreateRequest(Class<T> type, Map<String, String> parameters) {
             return createRequest(type, parameters);
         }
     }
@@ -230,7 +225,7 @@ public class ConnectorBaseTest {
         }
 
         @Override
-        public PaymentResponse send(IterableMap<String, String> data) {
+        public PaymentResponse send(Map<String, String> data) {
             return null;
         }
 
@@ -240,7 +235,7 @@ public class ConnectorBaseTest {
         }
 
         @Override
-        public IterableMap<String, String> getData() {
+        public Map<String, String> getData() {
             return null;
         }
     }

@@ -18,15 +18,10 @@ package org.opencps.payment;
 
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.apache.ApacheHttpTransport;
-
-import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.collections4.IterableMap;
-import org.apache.commons.collections4.map.HashedMap;
 import org.opencps.payment.api.Connector;
 
 /**
@@ -39,7 +34,7 @@ import org.opencps.payment.api.Connector;
  */
 public abstract class ConnectorBase implements Connector {
 
-    protected IterableMap<String, String> parameters;
+    protected Map<String, String> parameters;
     
     /**
      * The HTTP transport object.
@@ -63,7 +58,7 @@ public abstract class ConnectorBase implements Connector {
         this.servletRequest = servletRequest;
         this.servletResponse = servletResponse;
         transport = new ApacheHttpTransport();
-        initialize(new HashedMap<String, String>());
+        initialize(new HashMap<String, String>());
     }
 
     /**
@@ -73,7 +68,7 @@ public abstract class ConnectorBase implements Connector {
         this.servletRequest = servletRequest;
         this.servletResponse = servletResponse;
         this.transport = transport;
-        initialize(new HashedMap<String, String>());
+        initialize(new HashMap<String, String>());
     }
     
     /**
@@ -81,9 +76,9 @@ public abstract class ConnectorBase implements Connector {
      * @see org.opencps.payment.api.Connector#initialize()
      */
     @Override
-    public Connector initialize(IterableMap<String, String> parameters) {
+    public Connector initialize(Map<String, String> parameters) {
         if (this.parameters == null) {
-            this.parameters = new HashedMap<String, String>();
+            this.parameters = new HashMap<String, String>();
         }
         for (Map.Entry<String, String> entry: parameters.entrySet()) {
             this.parameters.put(entry.getKey(), entry.getValue());
@@ -96,7 +91,7 @@ public abstract class ConnectorBase implements Connector {
      * @see org.opencps.payment.api.Connector#getParameters()
      */
     @Override
-    public IterableMap<String, String> getParameters() {
+    public Map<String, String> getParameters() {
         return parameters;
     }
     
@@ -187,16 +182,15 @@ public abstract class ConnectorBase implements Connector {
      * 
      * @param parameters
      * @return RequestBase
-     * @throws SecurityException 
-     * @throws NoSuchMethodException 
-     * @throws InvocationTargetException 
-     * @throws IllegalArgumentException 
-     * @throws IllegalAccessException 
-     * @throws InstantiationException 
      */
-    protected <T extends RequestBase> T createRequest(Class<T> type, IterableMap<String, String> parameters) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
-        T request = type.getDeclaredConstructor(type).newInstance(this);
-        request.initialize(parameters);
-        return request;
+    protected <T extends RequestBase> T createRequest(Class<T> type, Map<String, String> parameters) {
+        try {
+            T request = type.getDeclaredConstructor(type).newInstance(this);
+            request.initialize(parameters);
+            return request;
+        }
+        catch (Exception e) {
+            throw new RuntimeException("Unable to create request of " + type.getName());
+        }
     }
 }

@@ -16,20 +16,18 @@
 */
 package org.opencps.payment;
 
-import org.apache.commons.collections4.IterableMap;
-import org.apache.commons.collections4.map.HashedMap;
 import org.opencps.payment.api.PaymentItem;
 import org.opencps.payment.api.PaymentResponse;
 import org.opencps.payment.exception.InvalidRequestException;
-
 import org.opencps.payment.api.PaymentRequest;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import static org.mockito.Mockito.*;
-
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Unit test for Request Base.
@@ -54,7 +52,7 @@ public class RequestBaseTest extends TestCase {
      */
     protected void setUp() {
         request = mock(RequestBase.class, CALLS_REAL_METHODS);
-        IterableMap<String, String> params = new HashedMap<String, String>();
+        Map<String, String> params = new HashMap<String, String>();
         request.initialize(params);
     }
 
@@ -67,7 +65,7 @@ public class RequestBaseTest extends TestCase {
     }
 
     public void testInitializeWithParams() {
-        IterableMap<String, String> params = new HashedMap<String, String>();
+    	Map<String, String> params = new HashMap<String, String>();
         params.put("amount", "1.23");
         request.initialize(params);
         assertEquals("1.23", request.getParameters().get("amount"));
@@ -81,7 +79,7 @@ public class RequestBaseTest extends TestCase {
     public void testInitializeAfterRequestSent() {
         RequestBase request = mock(MockAbstractRequest.class, CALLS_REAL_METHODS);
         request.send();
-        IterableMap<String, String> params = new HashedMap<String, String>();
+        Map<String, String> params = new HashMap<String, String>();
         try {
             request.initialize(params);
             fail("Missing exception");
@@ -98,7 +96,7 @@ public class RequestBaseTest extends TestCase {
     }
     
     public void testSetCardWithParams() {
-        IterableMap<String, String> params = new HashedMap<String, String>();
+    	Map<String, String> params = new HashMap<String, String>();
         params.put("number", "1234");
         assertEquals(request, request.setCard(params));
         CreditCard card = request.getCard();
@@ -311,7 +309,7 @@ public class RequestBaseTest extends TestCase {
     }
     
     public void testSend() {
-        IterableMap<String, String> data = new HashedMap<String, String>();
+        Map<String, String> data = new HashMap<String, String>();
         PaymentResponse response = mock(PaymentResponse.class);
         PaymentRequest request = mock(RequestBase.class, CALLS_REAL_METHODS);
         when(request.getData()).thenReturn(data);
@@ -364,12 +362,12 @@ public class RequestBaseTest extends TestCase {
         }
 
         @Override
-        public IterableMap<String, String> getData() {
+        public Map<String, String> getData() {
             return null;
         }
 
         @Override
-        public PaymentResponse send(IterableMap<String, String> data) {
+        public PaymentResponse send(Map<String, String> data) {
             response = mock(PaymentResponse.class);
             return response;
         }

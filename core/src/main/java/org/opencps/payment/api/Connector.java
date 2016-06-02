@@ -16,7 +16,7 @@
 */
 package org.opencps.payment.api;
 
-import org.apache.commons.collections4.IterableMap;
+import java.util.Map;
 
 /**
  * Payment connector interface
@@ -47,14 +47,14 @@ public interface Connector {
      * @param capacity the initial capacity
      * @return Connector instance
      */
-    public Connector initialize(IterableMap<String, String> parameters);
+    public Connector initialize(Map<String, String> parameters);
 
     /**
      * Get all connector parameters
      * 
      * @return IterableMap
      */
-    public IterableMap<String, String> getParameters();
+    public Map<String, String> getParameters();
 
     /**
      * Supports authorize
