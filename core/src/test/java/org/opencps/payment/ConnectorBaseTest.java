@@ -45,7 +45,7 @@ public class ConnectorBaseTest {
     }
 
     @Test
-    public void testConstruct() {
+    public void testCoConnectorBasenstruct() {
         ConnectorBase connector = new MockAbstractConnector();
         assertTrue(connector.getHttpTransport() instanceof HttpTransport);
         assertTrue(connector.getServletRequest() instanceof HttpServletRequest);
@@ -81,8 +81,20 @@ public class ConnectorBaseTest {
     }
 
     @Test
+    public void testAuthorize() {
+        Map<String, String> params = new HashMap<String, String>();
+        assertTrue(connector.authorize(params) instanceof RequestBase);
+    }
+
+    @Test
     public void testSupportsCompleteAuthorize() {
         assertFalse(connector.supportsCompleteAuthorize());
+    }
+
+    @Test
+    public void testCompleteAuthorize() {
+        Map<String, String> params = new HashMap<String, String>();
+        assertTrue(connector.completeAuthorize(params) instanceof RequestBase);
     }
 
     @Test
@@ -91,8 +103,20 @@ public class ConnectorBaseTest {
     }
 
     @Test
+    public void testCapture() {
+        Map<String, String> params = new HashMap<String, String>();
+        assertTrue(connector.capture(params) instanceof RequestBase);
+    }
+
+    @Test
     public void testSupportsPurchase() {
         assertFalse(connector.supportsPurchase());
+    }
+
+    @Test
+    public void testPurchase() {
+        Map<String, String> params = new HashMap<String, String>();
+        assertTrue(connector.purchase(params) instanceof RequestBase);
     }
 
     @Test
@@ -101,13 +125,31 @@ public class ConnectorBaseTest {
     }
 
     @Test
+    public void testCompletePurchase() {
+        Map<String, String> params = new HashMap<String, String>();
+        assertTrue(connector.completePurchase(params) instanceof RequestBase);
+    }
+
+    @Test
     public void testSupportsRefund() {
         assertFalse(connector.supportsRefund());
     }
 
     @Test
-    public void testSupportsVoid() {
-        assertFalse(connector.supportsVoid());
+    public void testRefund() {
+        Map<String, String> params = new HashMap<String, String>();
+        assertTrue(connector.refund(params) instanceof RequestBase);
+    }
+
+    @Test
+    public void testSupportsRevert() {
+        assertFalse(connector.supportsRevert());
+    }
+
+    @Test
+    public void testRevert() {
+        Map<String, String> params = new HashMap<String, String>();
+        assertTrue(connector.revert(params) instanceof RequestBase);
     }
 
     @Test
@@ -116,8 +158,9 @@ public class ConnectorBaseTest {
     }
 
     @Test
-    public void testSupportsDeleteCard() {
-        assertFalse(connector.supportsDeleteCard());
+    public void testCreateCard() {
+        Map<String, String> params = new HashMap<String, String>();
+        assertTrue(connector.createCard(params) instanceof RequestBase);
     }
 
     @Test
@@ -126,19 +169,42 @@ public class ConnectorBaseTest {
     }
 
     @Test
+    public void testUpdateCard() {
+        Map<String, String> params = new HashMap<String, String>();
+        assertTrue(connector.updateCard(params) instanceof RequestBase);
+    }
+
+    @Test
+    public void testSupportsDeleteCard() {
+        assertFalse(connector.supportsDeleteCard());
+    }
+
+    @Test
+    public void testDeleteCard() {
+        Map<String, String> params = new HashMap<String, String>();
+        assertTrue(connector.deleteCard(params) instanceof RequestBase);
+    }
+
+    @Test
     public void testSupportsAcceptNotification() {
         assertFalse(connector.supportsAcceptNotification());
     }
 
+    @Test
+    public void testAcceptNotification() {
+        Map<String, String> params = new HashMap<String, String>();
+        assertTrue(connector.acceptNotification(params) instanceof RequestBase);
+    }
+
     public void testCreateRequest() {
-    	MockAbstractConnector connector = new MockAbstractConnector();
-    	Map<String, String> params = new HashMap<String, String>();
+        MockAbstractConnector connector = new MockAbstractConnector();
+        Map<String, String> params = new HashMap<String, String>();
         params.put("currency", "VND");
         MockAbstractRequest request = connector.callCreateRequest(MockAbstractRequest.class, params);
         assertEquals("VND", request.getCurrency());
     }
 
-    class MockAbstractConnector extends ConnectorBase {
+    public class MockAbstractConnector extends ConnectorBase {
 
         public MockAbstractConnector() {
             super(mock(HttpServletRequest.class), mock(HttpServletResponse.class));
@@ -189,7 +255,7 @@ public class ConnectorBaseTest {
         }
 
         @Override
-        public Boolean supportsVoid() {
+        public Boolean supportsRevert() {
             return false;
         }
 
@@ -213,12 +279,67 @@ public class ConnectorBaseTest {
             return false;
         }
         
-        public <T extends RequestBase> T  callCreateRequest(Class<T> type, Map<String, String> parameters) {
+        public <T extends RequestBase> T callCreateRequest(Class<T> type, Map<String, String> parameters) {
             return createRequest(type, parameters);
+        }
+
+        @Override
+        protected RequestBase doAuthorize(Map<String, String> parameters) {
+            return mock(RequestBase.class);
+        }
+
+        @Override
+        protected RequestBase doCompleteAuthorize(Map<String, String> parameters) {
+            return mock(RequestBase.class);
+        }
+
+        @Override
+        protected RequestBase doCapture(Map<String, String> parameters) {
+            return mock(RequestBase.class);
+        }
+
+        @Override
+        protected RequestBase doPurchase(Map<String, String> parameters) {
+            return mock(RequestBase.class);
+        }
+
+        @Override
+        protected RequestBase doCompletePurchase(Map<String, String> parameters) {
+            return mock(RequestBase.class);
+        }
+
+        @Override
+        protected RequestBase doRefund(Map<String, String> parameters) {
+            return mock(RequestBase.class);
+        }
+
+        @Override
+        protected RequestBase doRevert(Map<String, String> parameters) {
+            return mock(RequestBase.class);
+        }
+
+        @Override
+        protected RequestBase doAcceptNotification(Map<String, String> parameters) {
+            return mock(RequestBase.class);
+        }
+
+        @Override
+        protected RequestBase doCreateCard(Map<String, String> parameters) {
+            return mock(RequestBase.class);
+        }
+
+        @Override
+        protected RequestBase doUpdateCard(Map<String, String> parameters) {
+            return mock(RequestBase.class);
+        }
+
+        @Override
+        protected RequestBase doDeleteCard(Map<String, String> parameters) {
+            return mock(RequestBase.class);
         }
     }
     
-    class MockAbstractRequest extends RequestBase {
+    public class MockAbstractRequest extends RequestBase {
 
         public MockAbstractRequest(ConnectorBase connector) {
             super(connector);
@@ -226,17 +347,17 @@ public class ConnectorBaseTest {
 
         @Override
         public PaymentResponse send(Map<String, String> data) {
-            return null;
+            return mock(PaymentResponse.class);
         }
 
         @Override
         public PaymentResponse send(String data) {
-            return null;
+            return mock(PaymentResponse.class);
         }
 
         @Override
         public Map<String, String> getData() {
-            return null;
+            return new HashMap<String, String>();
         }
     }
 

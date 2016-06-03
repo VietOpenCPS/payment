@@ -93,10 +93,10 @@ public interface PaymentConnector {
     public Boolean supportsRefund();
 
     /**
-     * Supports void
+     * Supports revert(void)
      * @return Boolean
      */
-    public Boolean supportsVoid();
+    public Boolean supportsRevert();
 
     /**
      * Supports accept notification

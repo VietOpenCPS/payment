@@ -70,7 +70,7 @@ public abstract class ConnectorBase implements PaymentConnector {
         this.transport = transport;
         initialize(new HashMap<String, String>());
     }
-    
+
     /**
      * (non-Javadoc)
      * @see org.opencps.payment.api.PaymentConnector#initialize()
@@ -85,7 +85,7 @@ public abstract class ConnectorBase implements PaymentConnector {
         }
         return this;
     }
-    
+
     /**
      * (non-Javadoc)
      * @see org.opencps.payment.api.PaymentConnector#getParameters()
@@ -94,7 +94,7 @@ public abstract class ConnectorBase implements PaymentConnector {
     public Map<String, String> getParameters() {
         return parameters;
     }
-    
+
     /**
      * Get a parameter
      * 
@@ -103,7 +103,7 @@ public abstract class ConnectorBase implements PaymentConnector {
     public String getParameter(String key) {
         return parameters.get(key);
     }
-    
+
     /**
      * Set a parameter
      * 
@@ -114,7 +114,7 @@ public abstract class ConnectorBase implements PaymentConnector {
         parameters.put(key, value);
         return this;
     }
-    
+
     /**
      * Get test mode of the connector
      */
@@ -126,7 +126,7 @@ public abstract class ConnectorBase implements PaymentConnector {
             return false;
         }
     }
-    
+
     /**
      * Set test mode of the connector
      */
@@ -134,7 +134,7 @@ public abstract class ConnectorBase implements PaymentConnector {
         setParameter("testMode", value.toString());
         return this;
     }
-    
+
     /**
      * Get currency of the connector
      * @return String
@@ -142,7 +142,7 @@ public abstract class ConnectorBase implements PaymentConnector {
     public String getCurrency() {
         return getParameter("currency").toUpperCase();
     }
-    
+
     /**
      * Set currency of the connector
      * @param value
@@ -152,7 +152,7 @@ public abstract class ConnectorBase implements PaymentConnector {
         setParameter("currency", value);
         return this;
     }
-    
+
     /**
      * Get http servlet request
      * @return HttpServletRequest
@@ -160,7 +160,7 @@ public abstract class ConnectorBase implements PaymentConnector {
     public HttpServletRequest getServletRequest() {
         return servletRequest;
     }
-    
+
     /**
      * Get http servlet response
      * @return HttpServletResponse
@@ -168,7 +168,7 @@ public abstract class ConnectorBase implements PaymentConnector {
     public HttpServletResponse getServletResponse() {
         return servletResponse;
     }
-    
+
     /**
      * Get http transport
      * @return HttpTransport
@@ -176,7 +176,7 @@ public abstract class ConnectorBase implements PaymentConnector {
     public HttpTransport getHttpTransport() {
         return transport;
     }
-    
+
     /**
      * Create and initialize a request object
      * 
@@ -190,7 +190,128 @@ public abstract class ConnectorBase implements PaymentConnector {
             return request;
         }
         catch (Exception e) {
-            throw new RuntimeException("Unable to create request of " + type.getName());
+            throw new RuntimeException(e);
         }
     }
+
+    /**
+     * Create an authorize request
+     * @param parameters gateway-specific data, that will be sent to the Gateway service.
+     * @return The request from the connector.
+     */
+    public RequestBase authorize(Map<String, String> parameters) {
+        return doAuthorize(parameters);
+    }
+
+    protected abstract RequestBase doAuthorize(Map<String, String> parameters);
+
+    /**
+     * Create a complete authorize request
+     * @param parameters gateway-specific data, that will be sent to the Gateway service.
+     * @return The request from the connector.
+     */
+    public RequestBase completeAuthorize(Map<String, String> parameter) {
+        return doCompleteAuthorize(parameter);
+    }
+
+    protected abstract RequestBase doCompleteAuthorize(Map<String, String> parameters);
+
+    /**
+     * Create a capture request
+     * @param parameters gateway-specific data, that will be sent to the Gateway service.
+     * @return The request from the connector.
+     */
+    public RequestBase capture(Map<String, String> parameters) {
+        return doCapture(parameters);
+    }
+
+    protected abstract RequestBase doCapture(Map<String, String> parameters);
+
+    /**
+     * Create a authorize & purchase request
+     * @param parameters gateway-specific data, that will be sent to the Gateway service.
+     * @return The request from the connector.
+     */
+    public RequestBase purchase(Map<String, String> parameters) {
+        return doPurchase(parameters);
+    }
+
+    protected abstract RequestBase doPurchase(Map<String, String> parameters);
+
+    /**
+     * Create a complete capture request
+     * @param parameters gateway-specific data, that will be sent to the Gateway service.
+     * @return The request from the connector.
+     */
+    public RequestBase completePurchase(Map<String, String> parameters) {
+        return doCompletePurchase(parameters);
+    }
+
+    protected abstract RequestBase doCompletePurchase(Map<String, String> parameters);
+
+    /**
+     * Create a refund request
+     * @param parameters gateway-specific data, that will be sent to the Gateway service.
+     * @return The request from the connector.
+     */
+    public RequestBase refund(Map<String, String> parameters) {
+        return doRefund(parameters);
+    }
+
+    protected abstract RequestBase doRefund(Map<String, String> parameters);
+
+    /**
+     * Create a revert(void) request
+     * @param parameters gateway-specific data, that will be sent to the Gateway service.
+     * @return The request from the connector.
+     */
+    public RequestBase revert(Map<String, String> parameters) {
+        return doRevert(parameters);
+    }
+
+    protected abstract RequestBase doRevert(Map<String, String> parameters);
+
+    /**
+     * Create an accept notification request
+     * @param parameters gateway-specific data, that will be sent to the Gateway service.
+     * @return The request from the connector.
+     */
+    public RequestBase acceptNotification(Map<String, String> parameters) {
+        return doAcceptNotification(parameters);
+    }
+
+    protected abstract RequestBase doAcceptNotification(Map<String, String> parameters);
+
+    /**
+     * Create a create card request
+     * @param parameters gateway-specific data, that will be sent to the Gateway service.
+     * @return The request from the connector.
+     */
+    public RequestBase createCard(Map<String, String> parameters) {
+        return doCreateCard(parameters);
+    }
+
+    protected abstract RequestBase doCreateCard(Map<String, String> parameters);
+
+    /**
+     * Create a update card request
+     * @param parameters gateway-specific data, that will be sent to the Gateway service.
+     * @return The request from the connector.
+     */
+    public RequestBase updateCard(Map<String, String> parameters) {
+        return doCreateCard(parameters);
+    }
+
+    protected abstract RequestBase doUpdateCard(Map<String, String> parameters);
+
+    /**
+     * Create a delete card request
+     * @param parameters gateway-specific data, that will be sent to the Gateway service.
+     * @return The request from the connector.
+     */
+    public RequestBase deleteCard(Map<String, String> parameters) {
+        return doCreateCard(parameters);
+    }
+
+    protected abstract RequestBase doDeleteCard(Map<String, String> parameters);
 }
