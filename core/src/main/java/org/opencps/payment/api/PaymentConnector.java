@@ -26,7 +26,7 @@ import java.util.Map;
  * 
  * @author Nguyen Van Nguyen <nguyennv@iwayvietnam.com>
  */
-public interface Connector {
+public interface PaymentConnector {
 
     /**
      * Get connector display name
@@ -47,7 +47,7 @@ public interface Connector {
      * @param capacity the initial capacity
      * @return Connector instance
      */
-    public Connector initialize(Map<String, String> parameters);
+    public PaymentConnector initialize(Map<String, String> parameters);
 
     /**
      * Get all connector parameters

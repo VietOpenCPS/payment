@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.opencps.payment.api.Connector;
+import org.opencps.payment.api.PaymentConnector;
 
 /**
  * This abstract class should be extended by all payment connectors
@@ -32,7 +32,7 @@ import org.opencps.payment.api.Connector;
  * 
  * @author Nguyen Van Nguyen <nguyennv@iwayvietnam.com>
  */
-public abstract class ConnectorBase implements Connector {
+public abstract class ConnectorBase implements PaymentConnector {
 
     protected Map<String, String> parameters;
     
@@ -73,10 +73,10 @@ public abstract class ConnectorBase implements Connector {
     
     /**
      * (non-Javadoc)
-     * @see org.opencps.payment.api.Connector#initialize()
+     * @see org.opencps.payment.api.PaymentConnector#initialize()
      */
     @Override
-    public Connector initialize(Map<String, String> parameters) {
+    public PaymentConnector initialize(Map<String, String> parameters) {
         if (this.parameters == null) {
             this.parameters = new HashMap<String, String>();
         }
@@ -88,7 +88,7 @@ public abstract class ConnectorBase implements Connector {
     
     /**
      * (non-Javadoc)
-     * @see org.opencps.payment.api.Connector#getParameters()
+     * @see org.opencps.payment.api.PaymentConnector#getParameters()
      */
     @Override
     public Map<String, String> getParameters() {
