@@ -19,6 +19,7 @@ package org.opencps.payment;
 import org.opencps.payment.api.PaymentItem;
 import org.opencps.payment.api.PaymentResponse;
 import org.opencps.payment.exception.InvalidRequestException;
+import org.opencps.payment.mock.MockBaseRequest;
 import org.opencps.payment.api.PaymentRequest;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -52,8 +53,7 @@ public class RequestBaseTest extends TestCase {
      */
     protected void setUp() {
         request = mock(RequestBase.class, CALLS_REAL_METHODS);
-        Map<String, String> params = new HashMap<String, String>();
-        request.initialize(params);
+        request.initialize(new HashMap<String, String>());
     }
 
     /**
@@ -65,7 +65,7 @@ public class RequestBaseTest extends TestCase {
     }
 
     public void testInitializeWithParams() {
-    	Map<String, String> params = new HashMap<String, String>();
+        Map<String, String> params = new HashMap<String, String>();
         params.put("amount", "1.23");
         request.initialize(params);
         assertEquals("1.23", request.getParameters().get("amount"));
@@ -77,10 +77,10 @@ public class RequestBaseTest extends TestCase {
     }
     
     public void testInitializeAfterRequestSent() {
-        RequestBase request = mock(MockAbstractRequest.class, CALLS_REAL_METHODS);
+        RequestBase request = mock(MockBaseRequest.class, CALLS_REAL_METHODS);
         request.send();
-        Map<String, String> params = new HashMap<String, String>();
         try {
+            Map<String, String> params = new HashMap<String, String>();
             request.initialize(params);
             fail("Missing exception");
         }
@@ -96,7 +96,7 @@ public class RequestBaseTest extends TestCase {
     }
     
     public void testSetCardWithParams() {
-    	Map<String, String> params = new HashMap<String, String>();
+        Map<String, String> params = new HashMap<String, String>();
         params.put("number", "1234");
         assertEquals(request, request.setCard(params));
         CreditCard card = request.getCard();
@@ -138,7 +138,7 @@ public class RequestBaseTest extends TestCase {
     }
     
     public void testAmountZeroNotAllowed() {
-        MockAbstractRequest request = new MockAbstractRequest();
+        MockBaseRequest request = new MockBaseRequest();
         request.zeroAmountNotAllowed().setAmount("0.00");
         try {
             request.getAmount();
@@ -297,7 +297,7 @@ public class RequestBaseTest extends TestCase {
     }
     
     public void testSetParameterAfterRequestSent() {
-        RequestBase request = new MockAbstractRequest();
+        RequestBase request = new MockBaseRequest();
         request.send();
         try {
             request.setCurrency("VND");
@@ -319,7 +319,7 @@ public class RequestBaseTest extends TestCase {
     }
     
     public void testGetResponseBeforeRequestSent() {
-        RequestBase request = new MockAbstractRequest();
+        RequestBase request = new MockBaseRequest();
         try {
             request.getResponse();
             fail("Missing exception");
@@ -330,48 +330,14 @@ public class RequestBaseTest extends TestCase {
     }
     
     public void testGetResponseAfterRequestSent() {
-        RequestBase request = new MockAbstractRequest();
+        RequestBase request = new MockBaseRequest();
         request.send();
         assertTrue(request.getResponse() instanceof PaymentResponse);
     }
     
     public void testGetConnector() {
-        RequestBase request = new MockAbstractRequest();
+        RequestBase request = new MockBaseRequest();
         assertTrue(request.getConnector() instanceof ConnectorBase);
-    }
-
-    class MockAbstractRequest extends RequestBase {
-
-        public MockAbstractRequest() {
-            super(mock(ConnectorBase.class));
-        }
-
-        public MockAbstractRequest(ConnectorBase connector) {
-            super(connector);
-        }
-        
-        public MockAbstractRequest zeroAmountNotAllowed() {
-            zeroAmountAllowed = false;
-            return this;
-        }
-
-        @Override
-        public PaymentResponse send(String data) {
-            response = mock(PaymentResponse.class);
-            return response;
-        }
-
-        @Override
-        public Map<String, String> getData() {
-            return null;
-        }
-
-        @Override
-        public PaymentResponse send(Map<String, String> data) {
-            response = mock(PaymentResponse.class);
-            return response;
-        }
-        
     }
 }
 
