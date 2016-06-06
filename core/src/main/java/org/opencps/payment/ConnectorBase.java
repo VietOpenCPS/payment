@@ -18,6 +18,8 @@ package org.opencps.payment;
 
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.apache.ApacheHttpTransport;
+
+import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
@@ -131,8 +133,7 @@ public abstract class ConnectorBase implements PaymentConnector {
      * Set test mode of the connector
      */
     public ConnectorBase setTestMode(Boolean value) {
-        setParameter("testMode", value.toString());
-        return this;
+        return setParameter("testMode", value.toString());
     }
 
     /**
@@ -149,8 +150,7 @@ public abstract class ConnectorBase implements PaymentConnector {
      * @return String
      */
     public ConnectorBase setCurrency(String value) {
-        setParameter("currency", value);
-        return this;
+        return setParameter("currency", value);
     }
 
     /**
@@ -185,7 +185,8 @@ public abstract class ConnectorBase implements PaymentConnector {
      */
     protected <T extends RequestBase> T createRequest(Class<T> type, Map<String, String> parameters) {
         try {
-            T request = type.getDeclaredConstructor(type).newInstance(this);
+            Constructor<T> ctor = type.getDeclaredConstructor(ConnectorBase.class);
+            T request = ctor.newInstance(this);
             request.initialize(parameters);
             return request;
         }
@@ -299,7 +300,7 @@ public abstract class ConnectorBase implements PaymentConnector {
      * @return The request from the connector.
      */
     public RequestBase updateCard(Map<String, String> parameters) {
-        return doCreateCard(parameters);
+        return doUpdateCard(parameters);
     }
 
     protected abstract RequestBase doUpdateCard(Map<String, String> parameters);
@@ -310,7 +311,7 @@ public abstract class ConnectorBase implements PaymentConnector {
      * @return The request from the connector.
      */
     public RequestBase deleteCard(Map<String, String> parameters) {
-        return doCreateCard(parameters);
+        return doDeleteCard(parameters);
     }
 
     protected abstract RequestBase doDeleteCard(Map<String, String> parameters);
